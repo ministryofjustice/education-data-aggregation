@@ -3,16 +3,37 @@ info.app:
   version: 1.0
 
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: education-data-aggregation
   codec:
     max-in-memory-size: 10MB
-
   jackson:
     date-format: "yyyy-MM-dd HH:mm:ss"
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
-
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${oauth.auth.url}/.well-known/jwks.json
+      client:
+        registration:
+          prison-api:
+            provider: hmpps-auth
+            client-id: '${oauth.client.system.client_id}'
+            client-secret: '${oauth.client.system.client_secret}'
+            authorization-grant-type: client_credentials
+            scope: read
+        provider:
+          hmpps-auth:
+            token-uri: ${oauth.auth.url}/oauth/token
   profiles:
     group:
       test:
@@ -32,6 +53,10 @@ server:
   error:
     include-message: always
 
+api:
+  base:
+    path: /api
+
 management:
   endpoints:
     web:
@@ -49,3 +74,15 @@ management:
     info:
       cache:
         time-to-live: 2000ms
+
+oauth:
+  auth:
+    url: https://sign-in-dev.hmpps.service.justice.gov.uk/auth
+  client:
+    system:
+      client_id: ${OAUTH_SYSTEM_CLIENT_ID}
+      client_secret: ${OAUTH_CLIENT_SECRET}
+
+prison:
+  api:
+    url: https://api-dev.prison.service.justice.gov.uk/api

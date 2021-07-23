@@ -1,6 +1,29 @@
 server:
   shutdown: immediate
 
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:local-public-key.pub
+
+oauth:
+  auth:
+    url: http://localhost:8331/auth
+  client:
+    system:
+      client_id: education-data-aggregation
+      client_secret: client_secret
+
+prison:
+  api:
+    url: http://localhost:8332/api
+
+logging:
+  level:
+    uk.gov.justice.digital.hmpps.educationdataaggregation.prison: off
+
 management.endpoint:
   health.cache.time-to-live: 0
   info.cache.time-to-live: 0
