@@ -3,7 +3,7 @@ package uk.gov.justice.digital.hmpps.educationdataaggregation.prison.dto
 import io.swagger.annotations.ApiModelProperty
 import java.time.LocalDate
 
-class Address(
+data class Address(
   @ApiModelProperty(value = "Address Id", example = "543524", position = 1)
   val addressId: Long? = null,
 

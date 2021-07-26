@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull
 
 @ApiModel(description = "Offender Education")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class Education(
+data class Education(
   @ApiModelProperty(value = "Offender booking id.", example = "14", required = true)
   val bookingId: @NotNull Long? = null,
 
