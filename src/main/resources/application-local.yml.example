@@ -1,0 +1,17 @@
+debug: true
+oauth:
+  auth:
+    url: https://sign-in-dev.hmpps.service.justice.gov.uk/auth
+  client:
+    system:
+      client_id: education-data-aggregation
+      client_secret: ...
+
+
+logging:
+  level:
+    root: Debug
+
+prison:
+  api:
+    url: https://api-dev.prison.service.justice.gov.uk/api

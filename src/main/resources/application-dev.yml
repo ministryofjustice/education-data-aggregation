@@ -1,0 +1,18 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:local-public-key.pub
+
+oauth:
+  auth:
+    url: http://localhost:9090/auth
+  client:
+    system:
+      client_id: education-data-aggregation
+      client_secret: client_secret
+
+prison:
+  api:
+    url: http://localhost:8081/api

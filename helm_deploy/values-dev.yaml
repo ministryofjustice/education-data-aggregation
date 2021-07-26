@@ -8,6 +8,8 @@ generic-service:
     host: education-data-aggregation-dev.prison.service.justice.gov.uk
 
   env:
+    OAUTH_AUTH_URL: https://sign-in-dev.hmpps.service.justice.gov.uk/auth
+    PRISON_API_URL: https://api-dev.prison.service.justice.gov.uk/api
     APPLICATIONINSIGHTS_CONFIGURATION_FILE: applicationinsights.dev.json
 
 # CloudPlatform AlertManager receiver to route promethues alerts to slack

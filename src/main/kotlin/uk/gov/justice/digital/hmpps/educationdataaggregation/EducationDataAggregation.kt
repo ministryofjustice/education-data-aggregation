@@ -3,7 +3,7 @@ package uk.gov.justice.digital.hmpps.educationdataaggregation
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication()
+@SpringBootApplication
 class EducationDataAggregation
 
 fun main(args: Array<String>) {

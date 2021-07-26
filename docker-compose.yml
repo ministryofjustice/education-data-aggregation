@@ -3,15 +3,47 @@ services:
   education-data-aggregation:
     build:
       context: .
-    network_mode: "host"
-    container_name: education-data-aggregation
+    networks:
+      - hmpps
     ports:
       - "8081:8080"
+    depends_on:
+      - oauth2
+      - prison-api
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health/ping"]
     environment:
       - SERVER_PORT=8080
       - SPRING_PROFILES_ACTIVE=dev
+      - OAUTH_CLIENT_SYSTEM_CLIENT_ID=education-data-aggregation
+      - OAUTH_CLIENT_SYSTEM_CLIENT_SECRET=client_secret
+      - OAUTH_AUTH_URL=http://oauth2:9090/auth
+      - PRISON_API_URL=http://prison-api:8081/api
+
+  oauth2:
+    image: quay.io/hmpps/hmpps-auth:latest
+    networks:
+      - hmpps
+    container_name: oauth2
+    ports:
+      - "9090:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health"]
+    environment:
+      - TOKENVERIFICATION_ENABLED=false
+      - SPRING_PROFILES_ACTIVE=dev
+      - DELIUS_ENABLED=false
+
+  prison-api:
+    image: quay.io/hmpps/prison-api:latest
+    networks:
+      - hmpps
+    ports:
+      - "8081:8080"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/health" ]
+    environment:
+      - SPRING_PROFILES_ACTIVE=nomis-hsqldb
 
 networks:
   hmpps:

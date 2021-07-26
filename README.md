@@ -1,40 +1,47 @@
-# hmpps-template-kotlin
+# education-data-aggregation
 
-This is a skeleton project from which to create new kotlin projects from.
+This is an API service which exposes aggregated offender education data from internal hmpps services 
+and the third-party education provider Meganexus.
 
-# Instructions
+# Build instructions
 
-If this is a HMPPS project then the project will be created as part of bootstrapping - 
-see https://github.com/ministryofjustice/dps-project-bootstrap.
+To set up gradle and pull dependencies:
+`$ ./gradlew`
 
-## Creating a CloudPlatform namespace
+To build the service and run tests:
+`$ ./gradlew clean build`
 
-When deploying to a new namespace, you may wish to use this template kotlin project namespace as the basis for your new namespace:
+To run tests:
+`$ ./gradlew test`
 
-<https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live-1.cloud-platform.service.justice.gov.uk/hmpps-template-kotlin>
 
-Copy this folder, update all the existing namespace references, and submit a PR to the CloudPlatform team. Further instructions from the CloudPlatform team can be found here: <https://user-guide.cloud-platform.service.justice.gov.uk/#cloud-platform-user-guide>
+# Running the service 
 
-## Renaming from HMPPS Template Kotlin - github Actions
+There are a few defaults to easily run this service.
 
-Once the new repository is deployed. Navigate to the repository in github, and select the `Actions` tab.
-Click the link to `Enable Actions on this repository`.
+There is dev docker compose file with upstream dependency images and a spring dev profile pointing to their local urls.
 
-Find the Action workflow named: `rename-project-create-pr` and click `Run workflow`.  This workflow will will
-execute the `rename-project.bash` and create Pull Request for you to review.  Review the PR and merge.
+To start the upstream services locally:
+`docker-compose -f docker-compose-dev.yml up -d`
 
-Note: ideally this workflow would run automatically however due to a recent change github Actions are not
-enabled by default on newly created repos. There is no way to enable Actions other then to click the button in the UI.
-If this situation changes we will update this project so that the workflow is triggered during the bootstrap project.
-Further reading: <https://github.community/t/workflow-isnt-enabled-in-repos-generated-from-template/136421>
+To start the application locally:
+`./gradlew bootRun --args='--spring.profiles.active=dev'`
 
-## Manually renaming from HMPPS Template Kotlin
+Alternatively, you can point to the services remotely. A `application-local.yml.example` file exists with suggested fields to update with remote urls and config.
+You can rename this file to `application-local.yml` and fill it in with any remote or custom config.
 
-Run the `rename-project.bash` and create a PR.
+**note:** `application-local.yml` is git ignored.
 
-The `rename-project.bash` script takes a single argument - the name of the project and calculates from it:
-* The main class name (project name converted to pascal case) 
-* The project description (class name with spaces between the words)
-* The main package name (project name with hyphens removed)
+To start the application locally with local config:
+`./gradlew bootRun --args='--spring.profiles.active=local'`
 
-It then performs a search and replace and directory renames so the project is ready to be used.
+
+# API Documentation
+
+Point a browser to  `http://localhost:8080/swagger-ui` to see the API documentation.
+
+#Circle-CI
+
+The project is built automatically for PRs submitted to github, with its pipelines here:
+
+`https://app.circleci.com/pipelines/github/ministryofjustice/education-data-aggregation`
