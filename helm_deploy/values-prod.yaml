@@ -1,0 +1,19 @@
+---
+# Per environment values which override defaults in education-data-aggregation/values.yaml
+
+generic-service:
+  replicaCount: 2
+
+  ingress:
+    host: education-agg.prison.service.justice.gov.uk
+
+  env:
+    OAUTH_AUTH_URL: https://sign-in.hmpps.service.justice.gov.uk/auth
+    APPLICATIONINSIGHTS_CONFIGURATION_FILE: applicationinsights.json
+    PRISON_API_URL: https://api.prison.service.justice.gov.uk/api
+    SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: https://sign-in.hmpps.service.justice.gov.uk/auth/.well-known/jwks.json
+
+# CloudPlatform AlertManager receiver to route promethues alerts to slack
+# See https://user-guide.cloud-platform.service.justice.gov.uk/documentation/monitoring-an-app/how-to-create-alarms.html#creating-your-own-custom-alerts
+generic-prometheus-alerts:
+  alertSeverity: digital-prison-service
