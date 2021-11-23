@@ -6,6 +6,7 @@ generic-service:
 
   ingress:
     host: education-agg-dev.prison.service.justice.gov.uk
+    contextColour: green
 
   env:
     OAUTH_AUTH_URL: https://sign-in-dev.hmpps.service.justice.gov.uk/auth
