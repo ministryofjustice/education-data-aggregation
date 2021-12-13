@@ -71,3 +71,4 @@ ecr.repo
 **/Chart.lock
 
 application-local.yml
+/.trivyignore
